@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-RSpec.describe "Task", type: :system do
-  before do
-    FactoryBot.create(:task)
-    @tasks = Task.all.order(created_at: :desc)
-  end
+RSpec.describe "タスク管理機能", type: :system do
+  # before do
+  #   FactoryBot.create(:task)
+  #   @tasks = Task.all.order(created_at: :desc)
+  # end
 
   describe '「タスク一覧画面に遷移したら、作成済みのタスクが表示される」' do
-    context '' do
+    context 'タスクを作成した場合' do
       FactoryBot.create(:task)
-      it '' do
+      it '作成済みのタスクが表示されること' do
         visit tasks_path
 
         expect(page).to have_content 'イベント'
@@ -24,7 +24,7 @@ RSpec.describe "Task", type: :system do
         visit new_task_path
         fill_in "title", with: 'aaa'
         fill_in "detaile", with: 'aaa'
-        click_button '送信'
+        click_button '登録する'
         expect(page).to have_content 'aaa'
       end
     end
@@ -40,4 +40,19 @@ RSpec.describe "Task", type: :system do
       end
     end
   end
+
+  describe '作成順' do
+    context '' do
+      FactoryBot.create(:task)
+      FactoryBot.create(:task2)
+      FactoryBot.create(:task3)
+      it '' do
+        visit tasks_path
+        save_and_open_page
+        tds = page.all('td')
+        expect(tds[0]).to have_content 'イベント3'
+      end
+    end
+  end
+
 end
