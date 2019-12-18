@@ -20,6 +20,9 @@
     <%= form.label :detaile %>
     <%= form.text_field :detaile, id:"detaile" %>
   </div>
+  <%= form.date_field :deadline, id:"deadline" %>
+  <%= form.select(:status, {未着手: '未着手', 着手済み: '着手済み', 完了: '完了'}, { class: "form_priority__select" }) %>
+  <%= form.select(:priority, {高: '高', 中: '中', 低: '低'}, { class: "form_priority__select" }) %>
 
   <div class="actions">
     <%= form.submit %>
