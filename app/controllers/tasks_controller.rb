@@ -3,11 +3,13 @@ class TasksController < ApplicationController
 
   def index
     if params[:sort_deadline]
-      @tasks = Task.all.page(params[:page]).per(5)
+      @tasks = Task.all.order(deadline: "ASC").page(params[:page]).per(5)
     elsif params[:title] && params[:status]
-      # puts 'wwwwwwwwwwwwwwwwwwwwwwwwwwww'
+      puts 'wwwwwwwwwwwwwwwwwwwwwwwwwwww'
       @status = params[:status].to_i
       @tasks = Task.serch_title(params[:title]).serch_status(@status).page(params[:page]).per(5)
+    elsif params[:sort_priority]
+      @tasks = Task.all.order(priority: "ASC").page(params[:page]).per(5)
     else
     @tasks = Task.all.order(created_at: "DESC").page(params[:page]).per(5)
     end

@@ -8,6 +8,7 @@ ja:
       task:
         title: タイトル
         detaile: 詳細
+        deadline: 修了期限
       user:
         title: タイトル
         name: 名前
