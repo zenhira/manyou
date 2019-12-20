@@ -6,7 +6,7 @@ RSpec.describe "タスク管理機能", type: :system do
   #   @tasks = Task.all.order(created_at: :desc)
   # end
 
-  describe '「タスク一覧画面に遷移したら、作成済みのタスクが表示される」' do
+  describe 'タスク一覧画面に遷移したら、作成済みのタスクが表示される' do
     context 'タスクを作成した場合' do
       FactoryBot.create(:task)
       it '作成済みのタスクが表示されること' do
@@ -17,10 +17,10 @@ RSpec.describe "タスク管理機能", type: :system do
     end
   end
 
-  describe '「タスク登録画面で、必要項目を入力してcreateボタンを押したらデータが保存される」' do
-    context '' do
-      FactoryBot.create(:task)
-      it '' do
+  describe 'タスク登録画面で、必要項目を入力してcreateボタンを押したらデータが保存される' do
+    context 'タスクを作成した場合' do
+      # FactoryBot.create(:task)
+      it 'タスクの新規作成' do
         visit new_task_path
         fill_in "title", with: 'aaa'
         fill_in "detaile", with: 'aaa'
@@ -30,10 +30,10 @@ RSpec.describe "タスク管理機能", type: :system do
     end
   end
 
-  describe '任意のタスク詳細画面に遷移したら、該当タスクの内容が表示されたページに遷移する」' do
-    context '' do
+  describe '任意のタスク詳細画面に遷移したら、該当タスクの内容が表示されたページに遷移する' do
+    context 'タスクを作成した場合' do
       FactoryBot.create(:task)
-      it '' do
+      it 'タスクの詳細に繊維' do
         @task = FactoryBot.create(:task)
         visit task_path(@task)
         expect(page).to have_content 'イベント'
@@ -42,9 +42,8 @@ RSpec.describe "タスク管理機能", type: :system do
   end
 
   describe '作成順' do
-    context '' do
-
-      it '' do
+    context 'タスクを作成した場合' do
+      it '作成日順' do
         FactoryBot.create(:task)
         FactoryBot.create(:task2)
         FactoryBot.create(:task3)
@@ -57,26 +56,26 @@ RSpec.describe "タスク管理機能", type: :system do
   end
 
   describe '終了期限ソート' do
-    context '' do
-
-      it '' do
+    context 'タスクを作成した場合' do
+      it 'indexでソート' do
         FactoryBot.create(:task)
         FactoryBot.create(:task2)
         FactoryBot.create(:task3)
         visit tasks_path
         click_link '終了期限でソートする'
-
         # save_and_open_page
         tds = page.all('td')
         expect(tds[0]).to have_content 'イベント3'
+        expect(tds[8]).to have_content 'イベント'
+        expect(tds[16]).to have_content 'イベント2'
+        # save_and_open_page
       end
     end
   end
 
   describe '両方検索' do
-    context '' do
-
-      it '' do
+    context 'タスクを作成した場合' do
+      it 'ステータスとタイトルで検索' do
         FactoryBot.create(:task)
         FactoryBot.create(:task2)
         FactoryBot.create(:task3)
@@ -92,9 +91,8 @@ RSpec.describe "タスク管理機能", type: :system do
   end
 
   describe 'status検索' do
-    context '' do
-
-      it '' do
+    context 'タスクを作成した場合' do
+      it 'ステータスだけで検索' do
         FactoryBot.create(:task)
         FactoryBot.create(:task2)
         FactoryBot.create(:task3)
