@@ -79,13 +79,13 @@ RSpec.describe "タスク管理機能", type: :system do
         FactoryBot.create(:task)
         FactoryBot.create(:task2)
         FactoryBot.create(:task3)
-        # visit tasks_path
-        # fill_in "title", with: 'イベント2'
-        # select "status", with: "着手済み"
-        # click_on '検索'
-        # tds = page.all('td')
-        # expect(tds[0]).to have_content 'イベント2'
-        expect(Task.serch_status("1").serch_title("イベント").count).to eq 1
+        visit tasks_path
+        fill_in "title", with: 'イベント2'
+        find("option[value='1']").select_option
+        click_on '検索'
+        tds = page.all('td')
+        expect(tds[0]).to have_content 'イベント2'
+        # expect(page).to eq 1
       end
     end
   end
@@ -96,13 +96,13 @@ RSpec.describe "タスク管理機能", type: :system do
         FactoryBot.create(:task)
         FactoryBot.create(:task2)
         FactoryBot.create(:task3)
-        # visit tasks_path
-        # select "status", with: "未着手"
-        # click_on '検索'
-        # # save_and_open_page
-        # tds = page.all('td')
-        # expect(tds[0]).to have_content 'イベント'
-        expect(Task.serch_status("1").count).to eq 1
+        visit tasks_path
+        find("option[value='0']").select_option
+        click_on '検索'
+        # save_and_open_page
+        tds = page.all('td')
+        expect(tds[0]).to have_content 'イベント'
+        # expect(Task.serch_status("1").count).to eq 1
       end
     end
   end
