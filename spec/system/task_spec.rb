@@ -20,7 +20,6 @@ RSpec.describe "タスク管理機能", type: :system do
       FactoryBot.create(:task)
       it '作成済みのタスクが表示されること' do
         visit tasks_path
-
         expect(page).to have_content 'samplesampleA'
       end
     end
@@ -38,6 +37,33 @@ RSpec.describe "タスク管理機能", type: :system do
       end
     end
   end
+
+describe 'タスク一覧画面で削除ボタンを押したら、タスクを削除する' do
+  context '削除ボタンを押した場合' do
+    it '削除される' do
+      visit tasks_path
+      click_button 'destroy', match: :first
+      expect(page).to_not have_content 'testtesttest5'
+    end
+  end
+end
+
+describe 'タスク一覧画面で編集ボタンを押したら、タスクを編集する' do
+  context '編集ボタンを押した場合' do
+    it '編集される' do
+      visit tasks_path
+      click_link 'ログアウト'
+      fill_in 'session_email', with: 'user5@test.com'
+      fill_in 'session_password', with: 'password5'
+      click_on 'login'
+      click_on 'Edit', match: :first
+      fill_in "title", with: "aaaaaaa"
+      click_button '更新する'
+      expect(page).to have_content 'Task was successfully updated.'
+      expect(page).to have_content 'aaaaaaa'
+    end
+  end
+end
 
   describe '任意のタスク詳細画面に遷移したら、該当タスクの内容が表示されたページに遷移する' do
     context 'タスクを作成した場合' do
