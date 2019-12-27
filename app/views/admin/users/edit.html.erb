@@ -1,0 +1,7 @@
+<h2 class="administrater">管理者の画面です</h2>
+<h1>ユーザー情報編集画面</h1>
+
+<%= render 'form', user: @user %>
+
+<%= link_to 'ユーザー詳細', admin_user_path(@user) %>
+<%= link_to 'ユーザー一覧', admin_users_path %>

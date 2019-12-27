@@ -10,5 +10,25 @@
   <%= @task.detaile %>
 </p>
 
+<p>
+  <strong>Detaile:</strong>
+  <%= @task.deadline %>
+</p>
+
+<p>
+  <strong>Detaile:</strong>
+  <%= @task.status %>
+</p>
+
+<p>
+  <strong>Detaile:</strong>
+  <%= @task.priority %>
+</p>
+
+<p>
+  <strong>ユーザーの名前:</strong>
+  <%= @task.user.name %>
+</p>
+
 <%= link_to 'Edit', edit_task_path(@task) %> |
 <%= link_to 'Back', tasks_path %>
