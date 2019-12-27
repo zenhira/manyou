@@ -5,17 +5,22 @@ class TasksController < ApplicationController
   def index
     if params[:sort_deadline]
       @tasks = Task.all.order(deadline: "ASC").page(params[:page]).per(5)
-    elsif params[:title] && params[:status]
-      puts 'wwwwwwwwwwwwwwwwwwwwwwwwwwww'
-      @status = params[:status].to_i
-      @tasks = Task.serch_title(params[:title]).serch_status(@status).page(params[:page]).per(5)
     elsif params[:sort_priority]
       @tasks = Task.all.order(priority: "ASC").page(params[:page]).per(5)
+    elsif params[:title] && params[:status] && params[:label_ids]
+      puts "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
+      @status = params[:status].to_i
+      @label_id = params[:label_ids]
+      @tasl_labels = TaskLabel.where(label_id: @label_id).pluck(:task_id)
+      @tasks = Task.search_label(@tasl_labels).page(params[:page]).per(15)
+    elsif params[:title] && params[:status]
+      puts "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+      @status = params[:status].to_i
+        @tasks = Task.where(user_id: current_user.id).serch_title(params[:title]).serch_status(@status).page(params[:page]).per(5)
     else
-    @tasks = Task.all.order(created_at: "DESC").page(params[:page]).per(5)
+      puts "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+      @tasks = Task.where(user_id: current_user.id).order(created_at: :desc).page(params[:page]).per(5)
     end
-
-    @tasks = @tasks.user_scope(current_user.id)
   end
 
   def show
@@ -56,6 +61,6 @@ class TasksController < ApplicationController
   end
   
   def task_params
-    params.require(:task).permit(:title, :detaile, :status, :priority, :deadline)
+    params.require(:task).permit(:title, :detaile, :status, :priority, :deadline, label_ids: [] )
   end
 end
