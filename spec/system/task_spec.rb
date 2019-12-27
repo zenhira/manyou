@@ -42,8 +42,12 @@ describe 'タスク一覧画面で削除ボタンを押したら、タスクを�
   context '削除ボタンを押した場合' do
     it '削除される' do
       visit tasks_path
-      click_button 'destroy', match: :first
-      expect(page).to_not have_content 'testtesttest5'
+      
+      target = find(:css, "a[id$='task-delete-#{@task.id}']")
+      target.click
+      page.driver.browser.switch_to.alert.accept
+      # click_button 'destroy', match: :first
+      expect(page).to have_content 'Task was successfully destroyed.'
     end
   end
 end
@@ -91,10 +95,11 @@ end
       it 'indexでソート' do
         visit tasks_path
         click_link '終了期限でソートする'
-        tds = page.all('td')
-        expect(tds[0]).to have_content 'testtesttestA'
-        expect(tds[8]).to have_content 'testtesttestB'
-        expect(tds[16]).to have_content 'testtesttestC'
+        # tds = page.all('td')
+        # expect(tds[0]).to have_content 'testtesttestA'
+        # expect(tds[8]).to have_content 'testtesttestB'
+        # expect(tds[16]).to have_content 'testtesttestC'
+        expect(page).to have_text /.*testtesttestA.*testtesttestB.*testtesttestC.*/m
       end
     end
   end
