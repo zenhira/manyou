@@ -53,4 +53,55 @@ RSpec.describe 'users', type: :system do
       expect(page).to have_content "ログアウトしてください"
     end
   end
+
+  describe '管理者テスト' do
+    before do #事前ログイン
+      visit new_session_path
+      fill_in 'session_email', with: 'admin@test.com'
+      fill_in 'session_password', with: 'adminpass'
+      click_on "login"
+    end
+
+    it 'ユーザー一覧' do
+      visit admin_users_path
+      expect(page).to have_content 'Users'
+      expect(page).to have_content 'admin@test.com'
+      expect(page).to have_content 'admin'
+    end
+
+    it 'ユーザー詳細画面' do
+      visit admin_users_path
+      click_on '詳細', match: :first
+      expect(page).to have_content 'user1'
+      expect(page).to have_content 'user1@test.com'
+    end
+
+    it 'ユーザー更新' do
+      visit new_admin_user_path
+      fill_in "user_name", with: 'user6'
+      fill_in 'user_email', with: 'user6@test.com'
+      fill_in 'user_password', with: 'password6'
+      fill_in 'user_password_confirmation', with: 'password6'
+      click_on '登録する'
+      expect(page).to have_content '作成成功'
+    end
+
+    it 'ユーザー作成' do
+      visit new_admin_user_path
+      fill_in "user_name", with: 'user6'
+      fill_in 'user_email', with: 'user6@test.com'
+      fill_in 'user_password', with: 'password6'
+      fill_in 'user_password_confirmation', with: 'password6'
+      click_on '登録する'
+      expect(page).to have_content '作成成功'
+    end
+
+    it 'ユーザー削除' do
+      visit admin_users_path
+      click_on '削除', match: :first
+      page.driver.browser.switch_to.alert.accept
+      expect(page).to have_content '削除できました'
+    end
+
+  end
 end

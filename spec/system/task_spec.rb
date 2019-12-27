@@ -42,8 +42,9 @@ describe 'タスク一覧画面で削除ボタンを押したら、タスクを�
   context '削除ボタンを押した場合' do
     it '削除される' do
       visit tasks_path
-      click_button 'destroy', match: :first
-      expect(page).to_not have_content 'testtesttest5'
+      click_on 'Destroy', match: :first
+      page.driver.browser.switch_to.alert.accept
+      expect(page).to have_content 'Task was successfully destroyed'
     end
   end
 end

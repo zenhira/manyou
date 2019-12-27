@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   before_validation :ensure_has_name
   after_update :update_admin_count
-  before_destroy :destroy_admin_count
+  after_destroy :destroy_admin_count
 
   has_secure_password
   validates :email, presence: true, uniqueness: true
@@ -19,7 +19,7 @@ class User < ApplicationRecord
   end
 
   def destroy_admin_count
-    throw(:abort) if User.where(admin: true).length == 1 && self.admin?
+    throw(:abort) if User.where(admin: true).length == 0 && self.admin?
   end
 
   def update_admin_count

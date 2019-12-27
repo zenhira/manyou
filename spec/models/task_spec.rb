@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe Task, type: :model do
   before do
     @task1 = FactoryBot.create(:task)
-    @task2 = FactoryBot.create(:task2)
-    @task3 = FactoryBot.create(:task3)
+    @task2 = FactoryBot.create(:second_task)
+    @task3 = FactoryBot.create(:third_task)
   end
 
   it "タイトルが空だったら、保存されない" do

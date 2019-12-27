@@ -24,7 +24,7 @@ FactoryBot.define do
     user { User.first }
   end
   factory :second_task, class: Task do
-    title { 'testtesttest2' }
+    title { 'イベント' }
     detaile { 'samplesample2' }
     deadline { Time.zone.today + 3 }
     status { "完了" }
