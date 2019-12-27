@@ -21,7 +21,7 @@ class Admin::UsersController < ApplicationController
       if @user.save
         redirect_to admin_user_path(@user), notice: '作成成功'
       else
-        render :new
+        render :new, notice: '作成できませんでした'
       end
     end
   
@@ -29,15 +29,15 @@ class Admin::UsersController < ApplicationController
       if @user.update(user_params)
         redirect_to admin_user_path(@user), notice: '更新できました'
       else
-        render :edit
+        render :edit, notice: '編集できませんでした'
       end
     end
   
     def destroy
       if @user.destroy
-        redirect_to admin_user_path(@user), notice: '削除できました'
+        redirect_to admin_users_path, notice: '削除できました'
       else
-        redirect_to admin_user_path(@user), notice: '削除できませんでした'
+        redirect_to admin_users_path, notice: '削除できませんでした'
       end
     end
   

@@ -33,7 +33,7 @@ module SessionsHelper
   end
 
   def admin_user
-    redirect_to users_path, notice: '管理者権限がありません' unless current_user.admin?
+    redirect_to tasks_path, notice: '管理者権限がありません' unless current_user.admin?
   end
 
   def admin_user_new_or_edit
