@@ -20,6 +20,22 @@
     <%= form.label :detaile %>
     <%= form.text_field :detaile, id:"detaile" %>
   </div>
+  <%= form.label :deadline %>
+  <%= form.date_field :deadline, id:"deadline" %>
+  <%= form.select(:status, {未着手: '未着手', 着手済み: '着手済み', 完了: '完了'}, { class: "form_priority__select" }) %>
+  <%= form.select(:priority, {高: '高', 中: '中', 低: '低'}, { class: "form_priority__select" }) %>
+
+  <div class="field">
+  <% Label.all.each do |label| %>
+      <% if action_name == 'new' || action_name == 'create' %>
+        <%= form.check_box :label_ids, { multiple: true, checked: label[:checked], disabled: label[:disabled], include_hidden: false}, label[:id], "" %>
+        <label><%= label.title %></label>
+      <% elsif action_name == 'edit' || action_name == 'update' %>
+        <%= form.check_box :label_ids, { multiple: true, checked: @task.label_ids.include?(label.id), disabled: label[:disabled], include_hidden: false}, label[:id], "" %>
+        <label><%= label.title %></label>
+      <% end %>
+    <% end %>
+  </div>
 
   <div class="actions">
     <%= form.submit %>
